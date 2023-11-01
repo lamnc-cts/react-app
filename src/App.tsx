@@ -4,12 +4,12 @@ import './App.css'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import BaseButton from './components/common/BaseButton'
 
-interface Student<T, Y> {
-  id: number
-  name: string
-  class: T
-  phone: Y | number
-}
+//interface Student<T, Y> {
+//  id: number
+//  name: string
+//  class: T
+//  phone: Y | number
+//}
 
 const POSTS = [
   { id: 1, title: 'Post 1' },
@@ -61,6 +61,7 @@ function App() {
 
   return (
     <>
+      <h1>YEU THU TRANG </h1>
       {postsQuery.data.map((item) => (
         <div key={item.id}>{item.title}</div>
       ))}
