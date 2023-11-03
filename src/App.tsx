@@ -1,40 +1,10 @@
-//import reactLogo from './assets/react.svg'
-//import viteLogo from '/vite.svg'
-import './App.css'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import BaseButton from './components/common/BaseButton'
-
-//interface Student<T, Y> {
-//  id: number
-//  name: string
-//  class: T
-//  phone: Y | number
-//}
 
 const POSTS = [
   { id: 1, title: 'Post 1' },
   { id: 2, title: 'Post 2' }
 ]
-
-//const lamBeo: Student<number | string, object> = {
-//  id: 1,
-//  name: 'lam beo',
-//  class: 'agaga',
-//  phone: { id: 1 }
-//}
-//const { pokemon } = useSelector(selectAllPokemonState)
-//const dispatch = useDispatch()
-
-//useEffect(() => {
-//dispatch(fetchPokemon() as any)
-//}, [])
-
-//const addID = <T extends object & Partial<Student<string, null>>>(obj: T) => {
-//  return {
-//    ...obj,
-//    id: new Date().toString()
-//  }
-//}
 
 function wait(duration: number | string) {
   return new Promise((resolve) => setTimeout(resolve, +duration))
@@ -56,34 +26,24 @@ function App() {
     onSuccess: () => queryClient.invalidateQueries(['posts'])
   })
 
-  if (postsQuery.isLoading) return <h1>Loading</h1>
-  if (postsQuery.isError) return <h1>{JSON.stringify(postsQuery.error)}</h1>
+  const renderView = () => {
+    if (postsQuery.isLoading) return <h1>Loading</h1>
 
-  return (
-    <>
-      <h1>YEU THU TRANG </h1>
-      {postsQuery.data.map((item) => (
-        <div key={item.id}>{item.title}</div>
-      ))}
-      <BaseButton disabled={usePostMutation.isLoading} onClick={() => usePostMutation.mutate('New Post')} $primary>
-        ADD POST
-      </BaseButton>
-    </>
-  )
-  //return (
-  //  <>
-  //    <div>
-  //      <a href='https://vitejs.dev' target='_blank'>
-  //        <img src={viteLogo} className='logo' alt='Vite logo' />
-  //      </a>
-  //      <a href='https://react.dev' target='_blank'>
-  //        <img src={reactLogo} className='logo react' alt='React logo' />
-  //      </a>
-  //    </div>
-  //    <h1>Vite + React</h1>
-  //    <BaseButton $primary>BUTTON SIU CAP VIPPRO</BaseButton>
-  //  </>
-  //)
+    if (postsQuery.isError) return <h1>{JSON.stringify(postsQuery.error)}</h1>
+
+    return (
+      <>
+        {postsQuery.data.map((item) => (
+          <div key={item.id}>{item.title}</div>
+        ))}
+        <BaseButton disabled={usePostMutation.isLoading} onClick={() => usePostMutation.mutate('New Post')}>
+          ADD POST
+        </BaseButton>
+      </>
+    )
+  }
+
+  return <div className='min-w-screen min-h-screen flex justify-center items-center flex-col'>{renderView()}</div>
 }
 
 export default App
